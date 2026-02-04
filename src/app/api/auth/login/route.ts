@@ -32,9 +32,9 @@ export async function POST(request: Request) {
         const response = NextResponse.json({ success: true, role: user.role });
         response.cookies.set('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 60 * 60 * 24, // 1 day
+            secure: true, // Always true for https deployments like Vercel
+            sameSite: 'lax',
+            maxAge: 60 * 60 * 12, // Reduced to 12h for security with lax
             path: '/',
         });
 
