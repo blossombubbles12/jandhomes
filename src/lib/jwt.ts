@@ -1,22 +1,25 @@
 import { SignJWT, jwtVerify, type JWTPayload } from 'jose';
 
-// Use AUTH_SECRET if it exists, matching the user's .env.local
-const SECRET = process.env.JWT_SECRET || process.env.AUTH_SECRET || 'default-secret-key-change-me';
-const SECRET_KEY = new TextEncoder().encode(SECRET);
+// Helper to get secret at runtime to avoid build-time static replacement issues
+function getSecretKey() {
+    const secret = process.env.AUTH_SECRET || process.env.JWT_SECRET || 'default-secret-key-change-me';
+    return new TextEncoder().encode(secret);
+}
 
 export async function signToken(payload: JWTPayload) {
     return await new SignJWT(payload)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
         .setExpirationTime('24h')
-        .sign(SECRET_KEY);
+        .sign(getSecretKey());
 }
 
 export async function verifyToken(token: string) {
     try {
-        const { payload } = await jwtVerify(token, SECRET_KEY);
+        const { payload } = await jwtVerify(token, getSecretKey());
         return payload;
     } catch (error) {
+        // Detailed error logging can be helpful for debugging Vercel logs
         console.error('JWT Verification failed:', error);
         return null;
     }
