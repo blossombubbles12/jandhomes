@@ -30,13 +30,18 @@ export async function POST(request: Request) {
 
         await logAction(user.id, 'LOGIN', 'USER', user.id, { ip: request.headers.get('x-forwarded-for') || 'unknown' });
 
+        // Create the response object
         const response = NextResponse.json({ success: true, role: user.role });
-        response.cookies.set('token', token, {
+
+        // Set the cookie with robust options
+        response.cookies.set({
+            name: 'token',
+            value: token,
             httpOnly: true,
-            secure: true, // Always true for https deployments like Vercel
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
-            maxAge: 60 * 60 * 12, // Reduced to 12h for security with lax
             path: '/',
+            maxAge: 60 * 60 * 24, // 24 hours
         });
 
         return response;
