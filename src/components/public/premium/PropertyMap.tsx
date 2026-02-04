@@ -61,8 +61,7 @@ export function PropertyMap({ assets, className }: PropertyMapProps) {
                         : 'https://tiles.openfreemap.org/styles/dark',
                     center: center,
                     zoom: 11,
-                    attributionControl: false,
-                    antialias: true
+                    attributionControl: false
                 });
 
                 map.current = mapInstance;
