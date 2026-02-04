@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
 
     // Check if the path should be protected
     const isProtected = pathname.startsWith('/admin') ||
-        (pathname.startsWith('/api') && !pathname.startsWith('/api/auth'));
+        (pathname.startsWith('/api') && !pathname.startsWith('/api/auth') && !pathname.startsWith('/api/debug-auth'));
 
     if (!isProtected) {
         return NextResponse.next();
