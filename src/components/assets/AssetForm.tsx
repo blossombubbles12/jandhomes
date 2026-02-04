@@ -19,7 +19,7 @@ const assetSchema = z.object({
     type: z.string().min(1, "Type is required"),
     status: z.string(),
     listingType: z.string(),
-    isFeatured: z.boolean().default(false),
+    isFeatured: z.boolean().default(false).optional(),
     description: z.string(),
 
     // Location
