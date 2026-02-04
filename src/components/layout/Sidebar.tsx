@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin/dashboard' },
@@ -139,20 +140,20 @@ export function Sidebar() {
                 </Button>
 
                 {!collapsed && (
-                    <div className="mt-4 flex items-center px-2">
-                        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
-                            <span className="text-xs font-bold text-primary">
-                                {getUserInitials()}
-                            </span>
+                    <div className="mt-4 flex items-center justify-between px-2">
+                        <div className="flex items-center">
+                            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+                                <span className="text-xs font-bold text-primary">
+                                    {getUserInitials()}
+                                </span>
+                            </div>
+                            <div className="ml-3 flex-1 min-w-0">
+                                <p className="text-xs font-semibold truncate text-foreground">
+                                    {getDisplayName()}
+                                </p>
+                            </div>
                         </div>
-                        <div className="ml-3 flex-1 min-w-0">
-                            <p className="text-xs font-semibold truncate text-foreground">
-                                {getDisplayName()}
-                            </p>
-                            <p className="text-[10px] text-muted-foreground truncate">
-                                {user?.email || 'Loading...'}
-                            </p>
-                        </div>
+                        <ThemeToggle />
                     </div>
                 )}
             </div>
