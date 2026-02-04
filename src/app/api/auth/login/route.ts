@@ -34,13 +34,13 @@ export async function POST(request: Request) {
         const response = NextResponse.json({ success: true, role: user.role });
 
         // Set the cookie with robust options
-        // Temporarily disabling secure and enforcing standard SameSite to debug
+        // Using SameSite=None + Secure is the most robust for modern check
         response.cookies.set({
             name: 'token',
             value: token,
             httpOnly: true,
-            secure: false,
-            sameSite: 'lax',
+            secure: true,
+            sameSite: 'none',
             path: '/',
             maxAge: 60 * 60 * 24 * 7, // 7 days
         });
