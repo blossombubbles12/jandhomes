@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyToken } from './lib/auth';
+import { verifyToken } from './lib/jwt';
 
 const PROTECTED_ROUTES = ['/admin', '/api/assets'];
 const ADMIN_ROUTES = ['/admin/users', '/api/users']; // Removed /admin/settings to allow all auth users

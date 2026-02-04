@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { db } from '@/lib/db';
 import { assets } from '@/lib/schema';
 import { eq, and, ilike, or, sql } from 'drizzle-orm';
-import { verifyToken } from '@/lib/auth';
+import { verifyToken } from '@/lib/jwt';
 import { logAction } from '@/lib/audit';
 
 async function getUserIdFromToken() {

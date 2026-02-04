@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { users, auditLogs } from '@/lib/schema';
 import { eq } from 'drizzle-orm';
-import { signToken, comparePassword } from '@/lib/auth';
+import { signToken } from '@/lib/jwt';
+import { comparePassword } from '@/lib/auth';
 import { logAction } from '@/lib/audit';
 
 export async function POST(request: Request) {
