@@ -12,6 +12,8 @@
     "@hookform/resolvers": "^5.2.2",
     "@neondatabase/serverless": "^1.0.2",
     "@radix-ui/react-slot": "^1.2.4",
+    "bcryptjs": "^3.0.0",
+    "jose": "^6.0.0",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.9.0",
     "clsx": "^2.1.1",
