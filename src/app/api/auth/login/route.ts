@@ -38,10 +38,10 @@ export async function POST(request: Request) {
             name: 'token',
             value: token,
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            secure: true, // Force secure for Vercel
             sameSite: 'lax',
             path: '/',
-            maxAge: 60 * 60 * 24, // 24 hours
+            maxAge: 60 * 60 * 24 * 7, // 7 days
         });
 
         return response;
