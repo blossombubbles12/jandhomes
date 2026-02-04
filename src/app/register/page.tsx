@@ -6,7 +6,7 @@ import { UserAuthForm } from "@/components/auth/UserAuthForm"
 import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
-    title: "Register | Asset Manager",
+    title: "Register | Jand Homes",
     description: "Create an account",
 }
 
@@ -26,9 +26,9 @@ export default function RegisterPage() {
             {/* Left Decoration Side */}
             <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
                 <div className="absolute inset-0 bg-zinc-900" />
-                <div className="relative z-20 flex items-center text-lg font-medium">
-                    <Command className="mr-2 h-6 w-6" />
-                    Asset Manager Inc
+                <div className="relative z-20 flex items-center text-2xl font-serif font-bold tracking-tight">
+                    <Command className="mr-2 h-6 w-6 text-primary" />
+                    Jand Homes
                 </div>
                 <div className="relative z-20 mt-auto">
                     <blockquote className="space-y-2">

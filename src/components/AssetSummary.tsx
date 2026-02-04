@@ -44,16 +44,16 @@ export default function AssetSummary({ asset }: AssetSummaryProps) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 backdrop-blur-sm">
-                    <div className="flex items-center space-x-3 text-slate-500 mb-2">
+                <div className="bg-card p-6 rounded-2xl border border-border shadow-sm">
+                    <div className="flex items-center space-x-3 text-muted-foreground mb-2">
                         <DollarSign size={18} />
                         <span className="text-xs font-semibold uppercase tracking-wider">Current Value</span>
                     </div>
-                    <div className="text-2xl font-bold text-white">{formatCurrency(asset.currentValuation)}</div>
+                    <div className="text-2xl font-bold text-foreground">{formatCurrency(asset.currentValuation)}</div>
                 </div>
 
-                <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 backdrop-blur-sm">
-                    <div className="flex items-center space-x-3 text-slate-500 mb-2">
+                <div className="bg-card p-6 rounded-2xl border border-border shadow-sm">
+                    <div className="flex items-center space-x-3 text-muted-foreground mb-2">
                         <TrendingUp size={18} />
                         <span className="text-xs font-semibold uppercase tracking-wider">Growth Yield</span>
                     </div>
@@ -62,56 +62,56 @@ export default function AssetSummary({ asset }: AssetSummaryProps) {
                     </div>
                 </div>
 
-                <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 backdrop-blur-sm">
-                    <div className="flex items-center space-x-3 text-slate-500 mb-2">
+                <div className="bg-card p-6 rounded-2xl border border-border shadow-sm">
+                    <div className="flex items-center space-x-3 text-muted-foreground mb-2">
                         <Building2 size={18} />
                         <span className="text-xs font-semibold uppercase tracking-wider">Asset Class</span>
                     </div>
-                    <div className="text-2xl font-bold text-white">{asset.type}</div>
+                    <div className="text-2xl font-bold text-foreground">{asset.type}</div>
                 </div>
 
-                <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800 backdrop-blur-sm">
-                    <div className="flex items-center space-x-3 text-slate-500 mb-2 text-slate-400">
+                <div className="bg-card p-6 rounded-2xl border border-border shadow-sm">
+                    <div className="flex items-center space-x-3 text-muted-foreground mb-2">
                         <span className="text-xs font-semibold uppercase tracking-wider">Acquisition</span>
                     </div>
-                    <div className="text-2xl font-bold text-white">{formatCurrency(asset.purchasePrice)}</div>
+                    <div className="text-2xl font-bold text-foreground">{formatCurrency(asset.purchasePrice)}</div>
                 </div>
             </div>
 
-            <div className="bg-slate-900/40 p-8 rounded-2xl border border-slate-800 backdrop-blur-sm ring-1 ring-white/5">
-                <h3 className="text-lg font-semibold mb-4 text-white/90">Property Narrative</h3>
-                <p className="text-slate-400 leading-relaxed text-sm max-w-3xl">{asset.description || 'No detailed description provided for this luxury asset.'}</p>
+            <div className="bg-card p-8 rounded-2xl border border-border shadow-md ring-1 ring-primary/5">
+                <h3 className="text-lg font-semibold mb-4 text-foreground/90 font-serif">Property Narrative</h3>
+                <p className="text-muted-foreground leading-relaxed text-sm max-w-3xl">{asset.description || 'No detailed description provided for this luxury asset.'}</p>
 
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div className="space-y-4">
-                        <h4 className="text-xs font-bold text-slate-500 uppercase tracking-[0.2em]">Geographic Profile</h4>
-                        <div className="flex items-start space-x-3 text-slate-300">
-                            <MapPin size={20} className="mt-1 text-emerald-500 flex-shrink-0" />
+                        <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em]">Geographic Profile</h4>
+                        <div className="flex items-start space-x-3 text-foreground/80">
+                            <MapPin size={20} className="mt-1 text-primary flex-shrink-0" />
                             <span className="text-sm leading-6">
                                 {asset.address}<br />
-                                <span className="font-semibold text-white">{asset.city}, {asset.state}</span><br />
-                                <span className="text-slate-500 text-xs italic">{asset.country}</span>
+                                <span className="font-semibold text-foreground">{asset.city}, {asset.state}</span><br />
+                                <span className="text-muted-foreground text-xs italic">{asset.country}</span>
                             </span>
                         </div>
                     </div>
                     <div className="space-y-4">
-                        <h4 className="text-xs font-bold text-slate-500 uppercase tracking-[0.2em]">Physical Inventory</h4>
+                        <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-[0.2em]">Physical Inventory</h4>
                         <div className="grid grid-cols-2 gap-y-3 gap-x-8">
-                            <div className="flex justify-between border-b border-slate-800/50 pb-2">
-                                <span className="text-xs text-slate-500">Year Built</span>
-                                <span className="text-xs font-bold text-white">{asset.yearBuilt || 'N/A'}</span>
+                            <div className="flex justify-between border-b border-border pb-2">
+                                <span className="text-xs text-muted-foreground">Year Built</span>
+                                <span className="text-xs font-bold text-foreground">{asset.yearBuilt || 'N/A'}</span>
                             </div>
-                            <div className="flex justify-between border-b border-slate-800/50 pb-2">
-                                <span className="text-xs text-slate-500">Total Units</span>
-                                <span className="text-xs font-bold text-white">{asset.units || 'N/A'}</span>
+                            <div className="flex justify-between border-b border-border pb-2">
+                                <span className="text-xs text-muted-foreground">Total Units</span>
+                                <span className="text-xs font-bold text-foreground">{asset.units || 'N/A'}</span>
                             </div>
-                            <div className="flex justify-between border-b border-slate-800/50 pb-2">
-                                <span className="text-xs text-slate-500">Floors</span>
-                                <span className="text-xs font-bold text-white">{asset.floors || 'N/A'}</span>
+                            <div className="flex justify-between border-b border-border pb-2">
+                                <span className="text-xs text-muted-foreground">Floors</span>
+                                <span className="text-xs font-bold text-foreground">{asset.floors || 'N/A'}</span>
                             </div>
-                            <div className="flex justify-between border-b border-slate-800/50 pb-2">
-                                <span className="text-xs text-slate-500">Condition</span>
-                                <span className="text-xs font-bold text-emerald-500">{asset.conditionRating || 0}/10</span>
+                            <div className="flex justify-between border-b border-border pb-2">
+                                <span className="text-xs text-muted-foreground">Condition</span>
+                                <span className="text-xs font-bold text-primary">{asset.conditionRating || 0}/10</span>
                             </div>
                         </div>
                     </div>

@@ -83,7 +83,9 @@ export function Sidebar() {
             {/* Header */}
             <div className="h-16 flex items-center justify-between px-4 border-b border-border">
                 {!collapsed && (
-                    <span className="font-bold text-lg text-primary truncate">Asset Mgr.</span>
+                    <span className="font-serif font-bold text-2xl tracking-tight text-foreground">
+                        Jand<span className="text-primary">.</span>
+                    </span>
                 )}
                 <Button
                     variant="ghost"

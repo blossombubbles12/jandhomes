@@ -75,33 +75,33 @@ export default function AIChat() {
 
             {/* Chat Window */}
             {isOpen && (
-                <div className="pointer-events-auto bg-white w-80 md:w-96 h-[500px] rounded-2xl shadow-2xl border border-gray-200 flex flex-col mb-4 overflow-hidden animate-in slide-in-from-bottom-10 fade-in duration-200">
+                <div className="pointer-events-auto bg-card w-80 md:w-96 h-[500px] rounded-2xl shadow-2xl border border-border flex flex-col mb-4 overflow-hidden animate-in slide-in-from-bottom-10 fade-in duration-200">
 
                     {/* Header */}
-                    <div className="bg-blue-600 p-4 text-white flex justify-between items-center">
+                    <div className="bg-primary p-4 text-primary-foreground flex justify-between items-center shadow-md">
                         <div className="flex items-center space-x-2">
                             <Bot size={20} />
-                            <span className="font-medium">Asset Assistant</span>
+                            <span className="font-semibold tracking-tight">Jand Assistant</span>
                         </div>
-                        <button onClick={toggleChat} className="hover:bg-blue-700 p-1 rounded transition-colors">
+                        <button onClick={toggleChat} className="hover:bg-primary-foreground/10 p-1 rounded transition-colors">
                             <X size={18} />
                         </button>
                     </div>
 
                     {/* Messages */}
-                    <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50" ref={scrollRef}>
+                    <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-background/50" ref={scrollRef}>
                         {messages.length === 0 && (
-                            <div className="text-center text-gray-500 mt-10 text-sm">
-                                <p>👋 Hi! I'm the Jand Homes Assistant. How can I help with your portfolio?</p>
-                                <p className="mt-2 text-xs font-semibold uppercase text-blue-600">Try asking:</p>
-                                <ul className="mt-2 space-y-2 text-xs">
-                                    <li className="bg-white border border-gray-200 p-2 rounded-lg cursor-pointer hover:border-blue-400" onClick={() => setInput("What is the total value of my portfolio in Naira?")}>
+                            <div className="text-center text-muted-foreground mt-10 text-sm">
+                                <p className="mb-4">👋 Hi! I'm the <span className="font-serif font-bold text-foreground">Jand<span className="text-primary">.</span></span> Homes Assistant.</p>
+                                <p className="mt-2 text-xs font-bold uppercase tracking-widest text-primary">Try asking:</p>
+                                <ul className="mt-4 space-y-2 text-xs">
+                                    <li className="bg-card border border-border p-3 rounded-xl cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all" onClick={() => setInput("What is the total value of my portfolio in Naira?")}>
                                         "What is the total value of my portfolio?"
                                     </li>
-                                    <li className="bg-white border border-gray-200 p-2 rounded-lg cursor-pointer hover:border-blue-400" onClick={() => setInput("Which properties are currently active in Ajah?")}>
+                                    <li className="bg-card border border-border p-3 rounded-xl cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all" onClick={() => setInput("Which properties are currently active in Ajah?")}>
                                         "Which properties are active in Ajah?"
                                     </li>
-                                    <li className="bg-white border border-gray-200 p-2 rounded-lg cursor-pointer hover:border-blue-400" onClick={() => setInput("What is my total monthly rental income?")}>
+                                    <li className="bg-card border border-border p-3 rounded-xl cursor-pointer hover:border-primary/50 hover:bg-primary/5 transition-all" onClick={() => setInput("What is my total monthly rental income?")}>
                                         "What is my total monthly rental income?"
                                     </li>
                                 </ul>
@@ -110,9 +110,9 @@ export default function AIChat() {
 
                         {messages.map((m, i) => (
                             <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`max-w-[80%] rounded-lg p-3 text-sm ${m.role === 'user'
-                                    ? 'bg-blue-600 text-white rounded-br-none'
-                                    : 'bg-white border border-gray-200 text-gray-800 rounded-bl-none shadow-sm'
+                                <div className={`max-w-[85%] rounded-2xl p-3 text-sm leading-relaxed shadow-sm ${m.role === 'user'
+                                    ? 'bg-primary text-primary-foreground rounded-br-none'
+                                    : 'bg-muted border border-border text-foreground rounded-bl-none'
                                     }`}>
                                     {m.content}
                                 </div>
@@ -121,28 +121,28 @@ export default function AIChat() {
 
                         {isLoading && (
                             <div className="flex justify-start">
-                                <div className="bg-white border border-gray-200 rounded-lg p-3 rounded-bl-none shadow-sm flex space-x-1 items-center">
-                                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                                <div className="bg-muted border border-border rounded-2xl p-3 rounded-bl-none shadow-sm flex space-x-1 items-center">
+                                    <div className="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                                    <div className="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                                    <div className="w-2 h-2 bg-primary/40 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                                 </div>
                             </div>
                         )}
                     </div>
 
                     {/* Input */}
-                    <form onSubmit={handleSubmit} className="p-3 bg-white border-t border-gray-100 flex gap-2">
+                    <form onSubmit={handleSubmit} className="p-3 bg-card border-t border-border flex gap-2">
                         <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Ask about your assets..."
-                            className="flex-1 px-4 py-2 bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all text-gray-800"
+                            className="flex-1 px-4 py-2 bg-muted rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-background transition-all text-foreground placeholder:text-muted-foreground"
                         />
                         <button
                             type="submit"
                             disabled={isLoading || !input.trim()}
-                            className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className="bg-primary text-primary-foreground p-2 rounded-full hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
                         >
                             <Send size={18} />
                         </button>
@@ -153,7 +153,7 @@ export default function AIChat() {
             {/* Toggle Button */}
             <button
                 onClick={toggleChat}
-                className="pointer-events-auto bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center justify-center"
+                className="pointer-events-auto bg-primary hover:scale-105 active:scale-95 text-primary-foreground p-4 rounded-full shadow-2xl transition-all flex items-center justify-center ring-4 ring-primary/10"
             >
                 {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
             </button>

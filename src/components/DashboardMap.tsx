@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import maplibregl from 'maplibre-gl';
+import { useTheme } from 'next-themes';
 import { Asset } from '@/lib/schema';
 
 interface DashboardMapProps {
@@ -14,8 +15,17 @@ export default function DashboardMap({ assets }: DashboardMapProps) {
     const [mapLoading, setMapLoading] = React.useState(true);
     const [resizeKey, setResizeKey] = React.useState(0);
 
+    const { theme } = useTheme();
+
     useEffect(() => {
-        if (map.current) return;
+        if (map.current) {
+            // Update style when theme changes
+            map.current.setStyle(theme === 'dark'
+                ? 'https://tiles.openfreemap.org/styles/dark'
+                : 'https://tiles.openfreemap.org/styles/bright'
+            );
+            return;
+        }
         if (!mapContainer.current) {
             console.error('Map container ref is null');
             return;
@@ -29,7 +39,9 @@ export default function DashboardMap({ assets }: DashboardMapProps) {
 
         const mapInstance = new maplibregl.Map({
             container: mapContainer.current,
-            style: 'https://tiles.openfreemap.org/styles/dark',
+            style: theme === 'dark'
+                ? 'https://tiles.openfreemap.org/styles/dark'
+                : 'https://tiles.openfreemap.org/styles/bright',
             center: center,
             zoom: 11
         });
@@ -184,12 +196,12 @@ export default function DashboardMap({ assets }: DashboardMapProps) {
                 new maplibregl.Popup({ className: 'premium-map-popup', offset: 15 })
                     .setLngLat(coordinates)
                     .setHTML(`
-                        <div class="p-3">
-                            <h4 class="font-bold text-slate-900 mb-1 leading-tight">${props.name}</h4>
-                            <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-2">Verified Asset</p>
-                            <p class="text-sm text-emerald-600 mb-3 font-mono font-bold tracking-tighter">₦${Number(props.value).toLocaleString()}</p>
-                            <a href="/admin/assets/${props.id}" class="block text-center bg-slate-900 text-white px-3 py-2 rounded-lg text-xs font-bold hover:bg-slate-800 transition-all border border-slate-700 shadow-lg">
-                                Examine Property Details
+                        <div class="p-4 min-w-[200px]">
+                            <h4 class="font-bold text-lg mb-1 leading-tight font-serif">${props.name}</h4>
+                            <p class="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-bold mb-3">Verified Jand Property</p>
+                            <p class="text-lg text-primary mb-4 font-mono font-bold tracking-tighter">₦${Number(props.value).toLocaleString()}</p>
+                            <a href="/admin/assets/${props.id}" class="block text-center bg-primary text-primary-foreground px-4 py-3 rounded-xl text-xs font-bold hover:opacity-90 transition-all shadow-md">
+                                View Full Portfolio Details
                             </a>
                         </div>
                     `)
@@ -267,16 +279,16 @@ export default function DashboardMap({ assets }: DashboardMapProps) {
 
     return (
         <div
-            className="bg-slate-900 rounded-xl overflow-hidden h-full w-full relative border-2 border-slate-700 shadow-inner"
+            className="bg-card rounded-xl overflow-hidden h-full w-full relative border border-border shadow-inner"
             style={{ minHeight: '500px' }}
         >
             {mapLoading && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-950/90 backdrop-blur-md">
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-background/80 backdrop-blur-md">
                     <div className="flex flex-col items-center gap-4">
-                        <div className="w-10 h-10 border-4 border-emerald-500/10 border-t-emerald-500 rounded-full animate-spin" />
+                        <div className="w-10 h-10 border-4 border-primary/10 border-t-primary rounded-full animate-spin" />
                         <div className="text-center">
-                            <p className="text-slate-200 font-semibold">Loading Portfolio Map</p>
-                            <p className="text-slate-500 text-xs mt-1">Connecting to geospatial servers...</p>
+                            <p className="text-foreground font-semibold">Loading Jand Portfolio Map</p>
+                            <p className="text-muted-foreground text-xs mt-1">Connecting to geospatial servers...</p>
                         </div>
                     </div>
                 </div>
