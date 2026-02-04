@@ -9,7 +9,8 @@
 
 :root {
   /* Light Mode - Refined for higher contrast and accessibility */
-  --background: 0 0% 100%;
+  --background: 210 40% 98%;
+  /* Slightly off-white/grayish for depth against white cards */
   --foreground: 222.2 84% 4.9%;
 
   --card: 0 0% 100%;
@@ -26,8 +27,8 @@
   --secondary-foreground: 222.2 47.4% 11.2%;
 
   --muted: 210 40% 96.1%;
-  --muted-foreground: 215 25% 27%;
-  /* Much darker for readability */
+  --muted-foreground: 215 16% 47%;
+  /* Darker and less blue for neutrality and readability */
 
   --accent: 210 40% 96.1%;
   --accent-foreground: 222.2 47.4% 11.2%;
@@ -35,8 +36,9 @@
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 40% 98%;
 
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
+  --border: 214.3 31.8% 88%;
+  /* Darker border for better card definition */
+  --input: 214.3 31.8% 88%;
   --ring: 158 94% 30%;
 
   --radius: 0.5rem;
