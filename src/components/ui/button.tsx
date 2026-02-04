@@ -60,9 +60,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 whileTap={{ scale: 0.98 }}
                 whileHover={{ scale: 1.01 }}
                 className={cn(buttonVariants({ variant, size, className }))}
-                // @ts-expect-error
                 ref={ref as any}
-                // @ts-expect-error
                 {...(props as any)}
             />
         );
