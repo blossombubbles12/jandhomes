@@ -132,10 +132,10 @@ export function Sidebar() {
             {/* Footer */}
             <div className="p-4 border-t border-border mt-auto">
                 <Button variant="ghost" className={cn("w-full justify-start", collapsed ? "px-2" : "")} asChild>
-                    <Link href="/api/auth/signout">
+                    <a href="/api/auth/signout">
                         <LogOut size={20} className="text-red-500" />
                         {!collapsed && <span className="ml-3 text-red-500">Sign Out</span>}
-                    </Link>
+                    </a>
                 </Button>
 
                 {!collapsed && (
