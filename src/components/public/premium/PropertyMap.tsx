@@ -68,7 +68,7 @@ export function PropertyMap({ assets, className }: PropertyMapProps) {
                 mapInstance.addControl(new maplibregl.NavigationControl(), 'bottom-right');
 
                 mapInstance.on('load', () => {
-                    if (isDestroyed) return;
+                    if (isDestroyed || !mapInstance) return;
                     setMapLoading(false);
 
                     // Aggressive resize sequence for robust rendering
