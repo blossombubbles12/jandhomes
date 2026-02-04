@@ -1,20 +1,32 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyToken } from './lib/jwt';
-
-const PROTECTED_ROUTES = ['/admin', '/api/assets'];
-const ADMIN_ROUTES = ['/admin/users', '/api/users']; // Removed /admin/settings to allow all auth users
+import { verifyToken } from '@/lib/jwt';
 
 export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    const isProtectedRoute = PROTECTED_ROUTES.some((route) => pathname.startsWith(route));
-    const isAdminRoute = ADMIN_ROUTES.some((route) => pathname.startsWith(route));
+    // 1. Explicitly bypass public routes/assets to avoid any interference
+    if (
+        pathname.startsWith('/login') ||
+        pathname.startsWith('/register') ||
+        pathname.startsWith('/unauthorized') ||
+        pathname === '/' ||
+        pathname.startsWith('/_next') ||
+        pathname.startsWith('/api/auth') ||
+        pathname.includes('.') // Static files
+    ) {
+        return NextResponse.next();
+    }
+
+    // 2. Define protected paths
+    const isProtectedRoute = pathname.startsWith('/admin') || pathname.startsWith('/api/assets');
+    const isAdminRoute = pathname.startsWith('/admin/users') || pathname.startsWith('/api/users');
 
     if (!isProtectedRoute && !isAdminRoute) {
         return NextResponse.next();
     }
 
+    // 3. Token validation
     const token = request.cookies.get('token')?.value || request.headers.get('Authorization')?.replace('Bearer ', '');
 
     if (!token) {
@@ -24,41 +36,41 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    const payload = await verifyToken(token);
-    console.log('Middleware: Token verified payload:', payload);
+    try {
+        const payload = await verifyToken(token);
 
-    if (!payload) {
-        if (pathname.startsWith('/api/')) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        if (!payload) {
+            if (pathname.startsWith('/api/')) {
+                return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            }
+            return NextResponse.redirect(new URL('/login', request.url));
         }
+
+        const payloadData = payload as { role?: string; userId?: string };
+        const userRole = payloadData.role;
+
+        // 4. Role-based access control
+        if (isAdminRoute && userRole !== 'admin') {
+            return NextResponse.redirect(new URL('/unauthorized', request.url));
+        }
+
+        // 5. Inject headers for downstream use
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set('X-User-Id', payloadData.userId || '');
+        requestHeaders.set('X-User-Role', userRole || '');
+
+        return NextResponse.next({
+            request: {
+                headers: requestHeaders,
+            },
+        });
+    } catch (error) {
+        console.error('Middleware Error:', error);
         return NextResponse.redirect(new URL('/login', request.url));
     }
-
-    // Extend payload type for role check
-    const payloadData = payload as { role?: string; userId?: string };
-    const userRole = payloadData.role;
-    console.log('Middleware: Extracted userId:', payloadData.userId);
-
-    if (isAdminRoute && userRole !== 'admin') {
-        // ... existing code
-    }
-
-    const requestHeaders = new Headers(request.headers);
-    requestHeaders.set('X-User-Id', payloadData.userId || '');
-    requestHeaders.set('X-User-Role', userRole || '');
-
-    console.log('Middleware: Setting headers', {
-        userId: requestHeaders.get('X-User-Id'),
-        role: requestHeaders.get('X-User-Role')
-    });
-
-    return NextResponse.next({
-        request: {
-            headers: requestHeaders,
-        },
-    });
 }
 
 export const config = {
-    matcher: ['/admin/:path*', '/api/:path*'],
+    matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };
+
