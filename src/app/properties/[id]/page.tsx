@@ -44,7 +44,7 @@ export default async function PropertyDetailPage({ params }: { params: Promise<{
 
     const price = Number(asset.currentValuation || 0);
     const media = (asset.media as any[]) || [];
-    const mainImage = media[0]?.url || 'https://images.unsplash.com/photo-1600585154340-be6199bc6d0b?q=80&w=2670&auto=format&fit=crop';
+    const mainImage = media[0]?.url || 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2670&auto=format&fit=crop';
 
     return (
         <main className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/30">
