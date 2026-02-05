@@ -207,7 +207,7 @@ export function AssetTable() {
                                                 {formatNaira(asset.currentValuation)}
                                             </td>
                                             <td className="px-6 py-4 text-right">
-                                                <div className="flex items-center justify-end gap-1 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <div className="flex items-center justify-end gap-1 transition-opacity">
                                                     <Button variant="ghost" size="icon" className="hover:bg-primary/10 hover:text-primary" asChild>
                                                         <Link href={`/admin/assets/${asset.id}`} title="View Details">
                                                             <ExternalLink className="h-4 w-4" />
@@ -215,11 +215,11 @@ export function AssetTable() {
                                                     </Button>
                                                     <Button variant="ghost" size="icon" className="hover:bg-blue-500/10 hover:text-blue-600" asChild>
                                                         <Link href={`/admin/assets/${asset.id}/edit`} title="Modify Data">
-                                                            <Edit className="h-4 w-4" />
+                                                            <Edit className="h-4 w-4 text-blue-600" />
                                                         </Link>
                                                     </Button>
                                                     <Button variant="ghost" size="icon" className="text-rose-600 hover:bg-rose-500/10" onClick={() => handleDelete(asset.id)} title="Archive Asset">
-                                                        <Trash2 className="h-4 w-4" />
+                                                        <Trash2 className="h-4 w-4 text-rose-600" />
                                                     </Button>
                                                 </div>
                                             </td>

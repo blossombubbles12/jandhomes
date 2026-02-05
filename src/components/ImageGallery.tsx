@@ -23,14 +23,14 @@ export default function ImageGallery({ images = defaultImages }: ImageGalleryPro
     const slides = images.map(img => ({ src: img.src }));
 
     return (
-        <div className="bg-slate-900/40 p-6 rounded-xl shadow-sm border border-slate-800 backdrop-blur-sm">
-            <h3 className="text-lg font-semibold mb-4 text-white/90">Gallery</h3>
+        <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+            <h3 className="text-lg font-semibold mb-4 text-foreground">Gallery</h3>
             {images.length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {images.map((img, i) => (
                         <div
                             key={i}
-                            className="relative aspect-video cursor-pointer overflow-hidden rounded-lg group border border-slate-800"
+                            className="relative aspect-video cursor-pointer overflow-hidden rounded-lg group border border-border"
                             onClick={() => { setIndex(i); setOpen(true); }}
                         >
                             <img
@@ -45,8 +45,8 @@ export default function ImageGallery({ images = defaultImages }: ImageGalleryPro
                     ))}
                 </div>
             ) : (
-                <div className="flex flex-col items-center justify-center py-10 bg-slate-800/20 rounded-lg border border-dashed border-slate-700">
-                    <p className="text-slate-500 text-sm italic">No images uploaded for this asset.</p>
+                <div className="flex flex-col items-center justify-center py-10 bg-muted/20 rounded-lg border border-dashed border-border">
+                    <p className="text-muted-foreground text-sm italic">No images uploaded for this asset.</p>
                 </div>
             )}
 

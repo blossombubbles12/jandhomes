@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import { useTheme } from 'next-themes';
 import { MapPinOff } from 'lucide-react';
 
 interface AssetMapProps {
@@ -15,12 +16,14 @@ export default function AssetMap({ center, name = "Property Location" }: AssetMa
     const map = useRef<maplibregl.Map | null>(null);
     const [mapLoading, setMapLoading] = useState(true);
 
+    const { theme } = useTheme();
+
     // If no center provided, show fallback UI
     if (!center || (center[0] === 0 && center[1] === 0)) {
         return (
-            <div className="bg-slate-900/40 p-6 rounded-xl shadow-sm border border-slate-800 backdrop-blur-sm h-[500px]">
-                <h3 className="text-lg font-semibold mb-4 text-white/90">Location Overview</h3>
-                <div className="w-full h-[calc(100%-2rem)] rounded-lg overflow-hidden relative border border-slate-800 flex flex-col items-center justify-center bg-slate-800/50 text-slate-500">
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border h-[500px]">
+                <h3 className="text-lg font-semibold mb-4 text-foreground">Location Overview</h3>
+                <div className="w-full h-[calc(100%-2rem)] rounded-lg overflow-hidden relative border border-border flex flex-col items-center justify-center bg-muted/50 text-muted-foreground">
                     <MapPinOff size={48} className="mb-4 opacity-50" />
                     <p className="text-sm font-medium">Location data not available</p>
                     <p className="text-xs mt-1">Add latitude and longitude to view map</p>
@@ -30,7 +33,13 @@ export default function AssetMap({ center, name = "Property Location" }: AssetMa
     }
 
     useEffect(() => {
-        if (map.current) return; // Initialize map only once
+        if (map.current) {
+            map.current.setStyle(theme === 'dark'
+                ? 'https://tiles.openfreemap.org/styles/dark'
+                : 'https://tiles.openfreemap.org/styles/bright'
+            );
+            return;
+        }
         if (!mapContainer.current) {
             console.error('Map container ref is null');
             return;
@@ -47,7 +56,9 @@ export default function AssetMap({ center, name = "Property Location" }: AssetMa
 
         const mapInstance = new maplibregl.Map({
             container: mapContainer.current,
-            style: 'https://tiles.openfreemap.org/styles/dark',
+            style: theme === 'dark'
+                ? 'https://tiles.openfreemap.org/styles/dark'
+                : 'https://tiles.openfreemap.org/styles/bright',
             center: center,
             zoom: 13,
             pitch: 0,
@@ -124,24 +135,24 @@ export default function AssetMap({ center, name = "Property Location" }: AssetMa
                 map.current = null;
             }
         };
-    }, [center, name]);
+    }, [center, name, theme]);
 
     return (
-        <div className="bg-slate-900/40 p-6 rounded-xl shadow-sm border border-slate-800 backdrop-blur-sm">
-            <h3 className="text-lg font-semibold mb-4 text-white/90">Location Overview</h3>
+        <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+            <h3 className="text-lg font-semibold mb-4 text-foreground">Location Overview</h3>
 
             {/* Map Container - Mirroring DashboardMap structure exactly */}
             <div
-                className="bg-slate-900 rounded-xl overflow-hidden relative border-2 border-slate-700 shadow-inner"
+                className="bg-muted rounded-xl overflow-hidden relative border border-border shadow-inner"
                 style={{ minHeight: '500px', height: '500px' }}
             >
                 {mapLoading && (
-                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-950/90 backdrop-blur-md">
+                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-background/80 backdrop-blur-md">
                         <div className="flex flex-col items-center gap-4">
-                            <div className="w-10 h-10 border-4 border-emerald-500/10 border-t-emerald-500 rounded-full animate-spin" />
+                            <div className="w-10 h-10 border-4 border-primary/10 border-t-primary rounded-full animate-spin" />
                             <div className="text-center">
-                                <p className="text-slate-200 font-semibold">Loading Asset Map</p>
-                                <p className="text-slate-500 text-xs mt-1">Connecting to geospatial servers...</p>
+                                <p className="text-foreground font-semibold">Loading Asset Map</p>
+                                <p className="text-muted-foreground text-xs mt-1">Connecting to geospatial servers...</p>
                             </div>
                         </div>
                     </div>
