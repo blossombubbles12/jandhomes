@@ -3,7 +3,7 @@ const sql = neon('postgresql://neondb_owner:npg_v8OMS3lAPGDU@ep-lucky-hall-abggb
 
 async function main() {
     try {
-        const result = await sql('SELECT email, role FROM users');
+        const result = await sql`SELECT email, role FROM users`;
         console.log(JSON.stringify(result, null, 2));
     } catch (e) {
         console.error(e);
