@@ -106,31 +106,31 @@ export function ProfileForm() {
             <CardContent>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium">Full Name</label>
-                        <Input {...form.register("name")} placeholder="Your name" />
+                        <label className="text-sm font-medium text-foreground">Full Name</label>
+                        <Input {...form.register("name")} placeholder="Your name" className="bg-background border-border" />
                         {form.formState.errors.name && (
-                            <p className="text-xs text-red-500">{form.formState.errors.name.message}</p>
+                            <p className="text-xs text-destructive font-medium">{form.formState.errors.name.message}</p>
                         )}
                     </div>
 
                     <div className="space-y-2">
-                        <label className="text-sm font-medium">Email Address</label>
-                        <Input {...form.register("email")} placeholder="email@example.com" type="email" />
+                        <label className="text-sm font-medium text-foreground">Email Address</label>
+                        <Input {...form.register("email")} placeholder="email@example.com" type="email" className="bg-background border-border" />
                         {form.formState.errors.email && (
-                            <p className="text-xs text-red-500">{form.formState.errors.email.message}</p>
+                            <p className="text-xs text-destructive font-medium">{form.formState.errors.email.message}</p>
                         )}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium">New Password (Optional)</label>
-                            <Input {...form.register("password")} type="password" placeholder="••••••" />
+                            <label className="text-sm font-medium text-foreground">New Password (Optional)</label>
+                            <Input {...form.register("password")} type="password" placeholder="••••••" className="bg-background border-border" />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-medium">Confirm New Password</label>
-                            <Input {...form.register("confirmPassword")} type="password" placeholder="••••••" />
+                            <label className="text-sm font-medium text-foreground">Confirm New Password</label>
+                            <Input {...form.register("confirmPassword")} type="password" placeholder="••••••" className="bg-background border-border" />
                             {form.formState.errors.confirmPassword && (
-                                <p className="text-xs text-red-500">{form.formState.errors.confirmPassword.message}</p>
+                                <p className="text-xs text-destructive font-medium">{form.formState.errors.confirmPassword.message}</p>
                             )}
                         </div>
                     </div>
