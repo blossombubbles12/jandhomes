@@ -134,9 +134,9 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-12">
             <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-white/90">{id ? 'Edit Asset' : 'New Asset'}</h2>
+                <h2 className="text-2xl font-bold text-foreground">{id ? 'Edit Asset' : 'New Asset'}</h2>
                 <div className="flex gap-2">
-                    <Button variant="ghost" type="button" onClick={() => router.back()}>
+                    <Button variant="ghost" type="button" onClick={() => router.back()} className="text-muted-foreground hover:text-foreground">
                         <X className="mr-2 h-4 w-4" /> Cancel
                     </Button>
                     <Button variant="premium" type="submit" disabled={isLoading}>
@@ -149,20 +149,20 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Basic Information */}
                 <section className="space-y-4">
-                    <div className="flex items-center gap-2 text-emerald-400 font-semibold mb-2">
+                    <div className="flex items-center gap-2 text-primary font-semibold mb-2">
                         <Building className="h-5 w-5" /> Basics
                     </div>
-                    <Card className="bg-slate-900/40 border-slate-800">
+                    <Card className="bg-card border-border shadow-sm">
                         <CardContent className="pt-6 space-y-4">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-400">Asset Name</label>
-                                <Input {...form.register("name")} placeholder="e.g. Sunset Heights Apartment" className="bg-slate-800 border-slate-700" />
-                                {form.formState.errors.name && <p className="text-xs text-red-500">{form.formState.errors.name.message}</p>}
+                                <label className="text-sm font-medium text-muted-foreground">Asset Name</label>
+                                <Input {...form.register("name")} placeholder="e.g. Sunset Heights Apartment" className="bg-background border-border text-foreground" />
+                                {form.formState.errors.name && <p className="text-xs text-destructive font-medium">{form.formState.errors.name.message}</p>}
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Type</label>
-                                    <select {...form.register("type")} className="w-full bg-slate-800 border-slate-700 rounded-md px-3 py-2 text-sm text-white focus:ring-emerald-500 outline-none">
+                                    <label className="text-sm font-medium text-muted-foreground">Type</label>
+                                    <select {...form.register("type")} className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:ring-primary outline-none">
                                         <option value="Residential">Residential</option>
                                         <option value="Commercial">Commercial</option>
                                         <option value="Industrial">Industrial</option>
@@ -171,8 +171,8 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Status</label>
-                                    <select {...form.register("status")} className="w-full bg-slate-800 border-slate-700 rounded-md px-3 py-2 text-sm text-white focus:ring-emerald-500 outline-none">
+                                    <label className="text-sm font-medium text-muted-foreground">Status</label>
+                                    <select {...form.register("status")} className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:ring-primary outline-none">
                                         <option value="Available">Available</option>
                                         <option value="Under Contract">Under Contract</option>
                                         <option value="Sold">Sold</option>
@@ -184,8 +184,8 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Listing Type</label>
-                                    <select {...form.register("listingType")} className="w-full bg-slate-800 border-slate-700 rounded-md px-3 py-2 text-sm text-white focus:ring-emerald-500 outline-none">
+                                    <label className="text-sm font-medium text-muted-foreground">Listing Type</label>
+                                    <select {...form.register("listingType")} className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:ring-primary outline-none">
                                         <option value="For Sale">For Sale</option>
                                         <option value="For Lease">For Lease</option>
                                         <option value="Shortlet">Shortlet</option>
@@ -194,24 +194,24 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
                                     </select>
                                 </div>
                                 <div className="space-y-2 flex flex-col justify-end">
-                                    <label className="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-slate-800/50 transition-colors">
+                                    <label className="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-muted/50 transition-colors">
                                         <input
                                             type="checkbox"
                                             {...form.register("isFeatured")}
-                                            className="w-5 h-5 rounded border-slate-700 bg-slate-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-slate-900"
+                                            className="w-5 h-5 rounded border-border bg-background text-primary focus:ring-primary focus:ring-offset-background"
                                         />
                                         <div className="flex flex-col">
-                                            <span className="text-sm font-medium text-white group-hover:text-emerald-400 transition-colors">Featured Asset</span>
-                                            <span className="text-[10px] text-slate-500">Show on homepage spotlight</span>
+                                            <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Featured Asset</span>
+                                            <span className="text-[10px] text-muted-foreground">Show on homepage spotlight</span>
                                         </div>
                                     </label>
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-400">Description</label>
+                                <label className="text-sm font-medium text-muted-foreground">Description</label>
                                 <textarea
                                     {...form.register("description")}
-                                    className="w-full min-h-[100px] bg-slate-800 border-slate-700 rounded-md px-3 py-2 text-sm text-white focus:ring-emerald-500 outline-none"
+                                    className="w-full min-h-[100px] bg-background border border-border rounded-md px-3 py-2 text-sm text-foreground focus:ring-primary outline-none"
                                     placeholder="Tell us about this property..."
                                 />
                             </div>
@@ -221,13 +221,13 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
 
                 {/* Location Information */}
                 <section className="space-y-4">
-                    <div className="flex items-center gap-2 text-emerald-400 font-semibold mb-2">
+                    <div className="flex items-center gap-2 text-primary font-semibold mb-2">
                         <MapPin className="h-5 w-5" /> Location
                     </div>
-                    <Card className="bg-slate-900/40 border-slate-800">
+                    <Card className="bg-card border-border shadow-sm">
                         <CardContent className="pt-6 space-y-4">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-400">Search Address (Autocomplete)</label>
+                                <label className="text-sm font-medium text-muted-foreground">Search Address (Autocomplete)</label>
                                 <AddressAutocomplete
                                     defaultValue={initialData?.address}
                                     onSelect={(s) => {
@@ -240,27 +240,27 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-400">Street Address (Manual Check)</label>
-                                <Input {...form.register("address")} className="bg-slate-800 border-slate-700" />
+                                <label className="text-sm font-medium text-muted-foreground">Street Address (Manual Check)</label>
+                                <Input {...form.register("address")} className="bg-background border-border text-foreground" />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">City</label>
-                                    <Input {...form.register("city")} className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">City</label>
+                                    <Input {...form.register("city")} className="bg-background border-border text-foreground" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">State/Province</label>
-                                    <Input {...form.register("state")} className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">State/Province</label>
+                                    <Input {...form.register("state")} className="bg-background border-border text-foreground" />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Latitude (Optional)</label>
-                                    <Input {...form.register("latitude")} placeholder="e.g. 34.0522" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Latitude (Optional)</label>
+                                    <Input {...form.register("latitude")} placeholder="e.g. 34.0522" className="bg-background border-border text-foreground" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Longitude (Optional)</label>
-                                    <Input {...form.register("longitude")} placeholder="e.g. -118.2437" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Longitude (Optional)</label>
+                                    <Input {...form.register("longitude")} placeholder="e.g. -118.2437" className="bg-background border-border text-foreground" />
                                 </div>
                             </div>
                         </CardContent>
@@ -269,29 +269,29 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
 
                 {/* Financial Information */}
                 <section className="space-y-4">
-                    <div className="flex items-center gap-2 text-emerald-400 font-semibold mb-2">
+                    <div className="flex items-center gap-2 text-primary font-semibold mb-2">
                         <DollarSign className="h-5 w-5" /> Financials
                     </div>
-                    <Card className="bg-slate-900/40 border-slate-800">
+                    <Card className="bg-card border-border shadow-sm">
                         <CardContent className="pt-6 space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Purchase Price ($)</label>
-                                    <Input {...form.register("purchasePrice")} type="number" step="0.01" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Purchase Price ($)</label>
+                                    <Input {...form.register("purchasePrice")} type="number" step="0.01" className="bg-background border-border text-foreground" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Current Valuation ($)</label>
-                                    <Input {...form.register("currentValuation")} type="number" step="0.01" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Current Valuation ($)</label>
+                                    <Input {...form.register("currentValuation")} type="number" step="0.01" className="bg-background border-border text-foreground" />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Monthly Rental Income ($)</label>
-                                    <Input {...form.register("rentalIncome")} type="number" step="0.01" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Monthly Rental Income ($)</label>
+                                    <Input {...form.register("rentalIncome")} type="number" step="0.01" className="bg-background border-border text-foreground" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Operating Cost ($)</label>
-                                    <Input {...form.register("operatingCost")} type="number" step="0.01" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Operating Cost ($)</label>
+                                    <Input {...form.register("operatingCost")} type="number" step="0.01" className="bg-background border-border text-foreground" />
                                 </div>
                             </div>
                         </CardContent>
@@ -300,33 +300,33 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
 
                 {/* Physical Attributes */}
                 <section className="space-y-4">
-                    <div className="flex items-center gap-2 text-emerald-400 font-semibold mb-2">
+                    <div className="flex items-center gap-2 text-primary font-semibold mb-2">
                         <Ruler className="h-5 w-5" /> Physical
                     </div>
-                    <Card className="bg-slate-900/40 border-slate-800">
+                    <Card className="bg-card border-border shadow-sm">
                         <CardContent className="pt-6 space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Building Size (sqft)</label>
-                                    <Input {...form.register("buildingSize")} type="number" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Building Size (sqft)</label>
+                                    <Input {...form.register("buildingSize")} type="number" className="bg-background border-border text-foreground" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Land Size (acres)</label>
-                                    <Input {...form.register("landSize")} type="number" step="0.01" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Land Size (acres)</label>
+                                    <Input {...form.register("landSize")} type="number" step="0.01" className="bg-background border-border text-foreground" />
                                 </div>
                             </div>
                             <div className="grid grid-cols-3 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Units</label>
-                                    <Input {...form.register("units")} type="number" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Units</label>
+                                    <Input {...form.register("units")} type="number" className="bg-background border-border text-foreground" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Floors</label>
-                                    <Input {...form.register("floors")} type="number" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Floors</label>
+                                    <Input {...form.register("floors")} type="number" className="bg-background border-border text-foreground" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-400">Year Built</label>
-                                    <Input {...form.register("yearBuilt")} type="number" className="bg-slate-800 border-slate-700" />
+                                    <label className="text-sm font-medium text-muted-foreground">Year Built</label>
+                                    <Input {...form.register("yearBuilt")} type="number" className="bg-background border-border text-foreground" />
                                 </div>
                             </div>
                         </CardContent>
@@ -335,13 +335,13 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
 
                 {/* Media & Documents */}
                 <section className="col-span-1 md:col-span-2 space-y-4">
-                    <div className="flex items-center gap-2 text-emerald-400 font-semibold mb-2">
+                    <div className="flex items-center gap-2 text-primary font-semibold mb-2">
                         <Upload className="h-5 w-5" /> Media & Attachments
                     </div>
-                    <Card className="bg-slate-900/40 border-slate-800">
+                    <Card className="bg-card border-border shadow-sm">
                         <CardContent className="pt-6 space-y-8">
                             <div className="space-y-4">
-                                <label className="text-sm font-medium text-slate-400">Visual Media (Images & Videos)</label>
+                                <label className="text-sm font-medium text-muted-foreground">Visual Media (Images & Videos)</label>
                                 <FileUploader
                                     value={media}
                                     onChange={(val) => setValue('media', val)}
@@ -351,7 +351,7 @@ export function AssetForm({ initialData, id }: AssetFormProps) {
                             </div>
 
                             <div className="space-y-4">
-                                <label className="text-sm font-medium text-slate-400">Documents & Audio (PDFs, Contracts, Reports)</label>
+                                <label className="text-sm font-medium text-muted-foreground">Documents & Audio (PDFs, Contracts, Reports)</label>
                                 <FileUploader
                                     value={attachments}
                                     onChange={(val) => setValue('attachments', val)}

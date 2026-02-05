@@ -61,11 +61,11 @@ export default async function AdminAssetDetailPage({ params }: { params: Promise
                         <Link href="/admin/assets"><ChevronLeft className="h-5 w-5" /></Link>
                     </Button>
                     <div>
-                        <h2 className="text-3xl font-bold tracking-tight text-white/90">{asset.name}</h2>
+                        <h2 className="text-3xl font-bold tracking-tight text-foreground">{asset.name}</h2>
                         <p className="text-muted-foreground">{asset.address}, {asset.city}</p>
                     </div>
                 </div>
-                <Button variant="premium" asChild>
+                <Button variant="premium" asChild className="hidden sm:flex">
                     <Link href={`/admin/assets/${id}/edit`}>
                         <Edit className="mr-2 h-4 w-4" /> Edit Asset
                     </Link>
@@ -89,21 +89,21 @@ export default async function AdminAssetDetailPage({ params }: { params: Promise
 
                         {/* Attachments Section */}
                         {attachmentItems.length > 0 && (
-                            <div className="bg-slate-900/40 p-6 rounded-xl shadow-sm border border-slate-800 backdrop-blur-sm">
-                                <h3 className="text-lg font-semibold mb-4 text-white/90">Documents & Files</h3>
+                            <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                                <h3 className="text-lg font-semibold mb-4 text-foreground">Documents & Files</h3>
                                 <div className="space-y-3">
                                     {(attachmentItems as any[]).map((file: any, i: number) => (
-                                        <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-slate-800/40 border border-slate-700 hover:border-emerald-500/30 transition-colors">
+                                        <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-muted/30 border border-border hover:border-primary/30 transition-colors">
                                             <div className="flex items-center gap-3">
-                                                <FileText className="h-5 w-5 text-emerald-500" />
+                                                <FileText className="h-5 w-5 text-primary" />
                                                 <div>
-                                                    <p className="text-sm font-medium text-white/90">{file.name}</p>
-                                                    <p className="text-[10px] uppercase text-slate-500 font-bold">{file.type}</p>
+                                                    <p className="text-sm font-medium text-foreground">{file.name}</p>
+                                                    <p className="text-[10px] uppercase text-muted-foreground font-bold">{file.type}</p>
                                                 </div>
                                             </div>
-                                            <Button variant="ghost" size="sm" asChild className="h-8 w-8 p-0">
+                                            <Button variant="ghost" size="sm" asChild className="h-8 w-8 p-0 border border-border/50">
                                                 <a href={file.url} target="_blank" rel="noopener noreferrer">
-                                                    <Download className="h-4 w-4 text-slate-400 hover:text-white" />
+                                                    <Download className="h-4 w-4 text-muted-foreground hover:text-foreground" />
                                                 </a>
                                             </Button>
                                         </div>
@@ -114,13 +114,13 @@ export default async function AdminAssetDetailPage({ params }: { params: Promise
                     </div>
 
                     {/* Right Column: Analytics */}
-                    <div className="space-y-8 text-white">
+                    <div className="space-y-8">
                         <FinancialChart />
 
                         {/* Recent Activity Table using data from audit logs */}
-                        <div className="bg-slate-900/40 p-6 rounded-xl shadow-sm border border-slate-800 backdrop-blur-sm min-h-[300px]">
-                            <h3 className="text-lg font-semibold mb-6 text-white/90 flex items-center gap-2">
-                                <Clock size={20} className="text-emerald-500" />
+                        <div className="bg-card p-6 rounded-xl shadow-sm border border-border min-h-[300px]">
+                            <h3 className="text-lg font-semibold mb-6 text-foreground flex items-center gap-2">
+                                <Clock size={20} className="text-primary" />
                                 Recent Activity
                             </h3>
                             <div className="space-y-6">
@@ -135,16 +135,16 @@ export default async function AdminAssetDetailPage({ params }: { params: Promise
                                             )} />
                                             <div className="flex-1">
                                                 <div className="flex justify-between items-start">
-                                                    <p className="font-semibold text-white/90">
+                                                    <p className="font-semibold text-foreground">
                                                         {log.action === 'CREATE' ? 'Asset Created' :
                                                             log.action === 'UPDATE' ? 'Asset Updated' :
                                                                 log.action === 'DELETE' ? 'Asset Deleted' : log.action}
                                                     </p>
-                                                    <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+                                                    <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">
                                                         {log.createdAt ? formatDistanceToNow(new Date(log.createdAt), { addSuffix: true }) : 'N/A'}
                                                     </p>
                                                 </div>
-                                                <p className="text-slate-400 text-xs mt-1">
+                                                <p className="text-muted-foreground text-xs mt-1">
                                                     {log.action === 'UPDATE' && log.details
                                                         ? `Changes made to property fields.`
                                                         : log.action === 'CREATE'
@@ -155,7 +155,7 @@ export default async function AdminAssetDetailPage({ params }: { params: Promise
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="flex flex-col items-center justify-center py-10 text-slate-500">
+                                    <div className="flex flex-col items-center justify-center py-10 text-muted-foreground">
                                         <Clock size={40} className="mb-2 opacity-20" />
                                         <p className="text-sm italic">No recent activity recorded.</p>
                                     </div>
