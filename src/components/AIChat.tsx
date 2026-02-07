@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { MessageCircle, X, Send, Bot, User as UserIcon } from 'lucide-react';
 import { usePathname, useParams } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface Message {
     role: 'user' | 'assistant';
     content: string;
+    isTyping?: boolean;
 }
 
 export default function AIChat() {
@@ -40,9 +43,9 @@ export default function AIChat() {
         try {
             // Determine context
             let context = {};
-            if (pathname === '/admin/dashboard') {
+            if (pathname === '/admin/dashboard' || pathname === '/dashboard') {
                 context = { page: 'dashboard' };
-            } else if (pathname.startsWith('/admin/assets/') && params.id) {
+            } else if ((pathname.startsWith('/admin/assets/') || pathname.startsWith('/properties/')) && params.id) {
                 context = { page: 'asset', assetId: params.id };
             }
 
@@ -50,7 +53,7 @@ export default function AIChat() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    messages: [...messages, userMessage], // Send history
+                    messages: messages.map(m => ({ role: m.role, content: m.content })), // Send history without UI flags
                     context
                 })
             });
@@ -58,7 +61,11 @@ export default function AIChat() {
             if (!response.ok) throw new Error('Failed to fetch');
 
             const data = await response.json();
-            const assistantMessage: Message = { role: 'assistant', content: data.content };
+            const assistantMessage: Message = {
+                role: 'assistant',
+                content: data.content,
+                isTyping: true
+            };
 
             setMessages(prev => [...prev, assistantMessage]);
 
@@ -68,6 +75,36 @@ export default function AIChat() {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    // Component for typewriter effect
+    const MessageContent = ({ message, isLast }: { message: Message, isLast: boolean }) => {
+        const [displayedContent, setDisplayedContent] = useState(
+            message.role === 'assistant' && message.isTyping ? "" : message.content
+        );
+
+        useEffect(() => {
+            if (message.role === 'assistant' && message.isTyping) {
+                let i = 0;
+                const interval = setInterval(() => {
+                    setDisplayedContent(message.content.slice(0, i + 1));
+                    i++;
+                    if (i >= message.content.length) {
+                        clearInterval(interval);
+                        // Optional: mark as done typing if needed
+                    }
+                }, 15);
+                return () => clearInterval(interval);
+            }
+        }, [message.content, message.role, message.isTyping]);
+
+        return (
+            <div className={`prose prose-sm max-w-none ${message.role === 'user' ? 'text-primary-foreground' : 'text-foreground'} break-words`}>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {displayedContent}
+                </ReactMarkdown>
+            </div>
+        );
     };
 
     return (
@@ -110,11 +147,11 @@ export default function AIChat() {
 
                         {messages.map((m, i) => (
                             <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                <div className={`max-w-[85%] rounded-2xl p-3 text-sm leading-relaxed shadow-sm ${m.role === 'user'
+                                <div className={`max-w-[90%] rounded-2xl p-4 text-sm leading-relaxed shadow-md transition-all duration-300 ${m.role === 'user'
                                     ? 'bg-primary text-primary-foreground rounded-br-none'
-                                    : 'bg-muted border border-border text-foreground rounded-bl-none'
+                                    : 'bg-muted/80 backdrop-blur-sm border border-border text-foreground rounded-bl-none'
                                     }`}>
-                                    {m.content}
+                                    <MessageContent message={m} isLast={i === messages.length - 1} />
                                 </div>
                             </div>
                         ))}

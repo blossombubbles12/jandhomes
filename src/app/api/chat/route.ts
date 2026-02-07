@@ -26,7 +26,9 @@ export async function POST(request: Request) {
                 - Answer questions about valuations, rental yields, and asset distribution.
                 - Be professional, accurate, and helpful.
                 - Use "₦" for currency.
-                - If asked about specific trends, base your answers on the provided data.
+                - FORMATTING: Use Markdown for all responses. Use headers (###), bold text, and bullet points to make information easy to read.
+                - ACCURACY: Base your answers ONLY on the provided data. If data is missing, state it clearly.
+                - STRICTNESS: Only answer questions related to the Jand Homes asset portfolio and real estate management.
             `;
         } else if (context?.page === 'asset' && context?.assetId) {
             const assetData = await getAssetContext(context.assetId);
@@ -41,12 +43,21 @@ export async function POST(request: Request) {
                 - Compare it to the rest of the portfolio if relevant.
                 - Suggest improvements or highlight strengths (e.g., high rental yield, prime location).
                 - Use "₦" for currency.
+                - FORMATTING: Use Markdown (headers, lists, bolding) to ensure clarity and readability.
+                - ACCURACY: Stick strictly to the provided asset details.
+                - STRICTNESS: Only provide info related to this asset and the company.
             `;
         } else {
             systemContext = `
                 You are the Jand Homes AI Assistant for Jand Homes Properties, a real estate company in Nigeria.
                 You help managing assets, analyzing data, and providing insights.
-                Always be professional and use Nigerian Naira (₦) for financial discussions.
+                
+                YOUR ROLE:
+                - Always be professional and helpful.
+                - Use Nigerian Naira (₦) for all financial discussions.
+                - FORMATTING: Use Markdown to structures your responses nicely.
+                - ACCURACY: Ensure all information about the backend and assets is accurate based on company standards.
+                - STRICTNESS: Only give responses related to the Jand Homes backend asset manager.
             `;
         }
 
