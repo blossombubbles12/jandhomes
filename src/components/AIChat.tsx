@@ -12,6 +12,39 @@ interface Message {
     isTyping?: boolean;
 }
 
+// Component for typewriter effect
+const MessageContent = ({ message, isLast }: { message: Message, isLast: boolean }) => {
+    const [displayedContent, setDisplayedContent] = useState(
+        message.role === 'assistant' && message.isTyping ? "" : message.content
+    );
+    const [isDone, setIsDone] = useState(!message.isTyping);
+
+    useEffect(() => {
+        if (message.role === 'assistant' && message.isTyping && !isDone) {
+            let i = 0;
+            const interval = setInterval(() => {
+                setDisplayedContent(message.content.slice(0, i + 1));
+                i++;
+                if (i >= message.content.length) {
+                    clearInterval(interval);
+                    setIsDone(true);
+                }
+            }, 8); // Slightly faster
+            return () => clearInterval(interval);
+        } else if (!message.isTyping || isDone) {
+            setDisplayedContent(message.content);
+        }
+    }, [message.content, message.role, message.isTyping, isDone]);
+
+    return (
+        <div className={`prose prose-sm max-w-none ${message.role === 'user' ? 'text-primary-foreground' : 'text-foreground'} break-words dark:prose-invert`}>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {displayedContent}
+            </ReactMarkdown>
+        </div>
+    );
+};
+
 export default function AIChat() {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
@@ -75,36 +108,6 @@ export default function AIChat() {
         } finally {
             setIsLoading(false);
         }
-    };
-
-    // Component for typewriter effect
-    const MessageContent = ({ message, isLast }: { message: Message, isLast: boolean }) => {
-        const [displayedContent, setDisplayedContent] = useState(
-            message.role === 'assistant' && message.isTyping ? "" : message.content
-        );
-
-        useEffect(() => {
-            if (message.role === 'assistant' && message.isTyping) {
-                let i = 0;
-                const interval = setInterval(() => {
-                    setDisplayedContent(message.content.slice(0, i + 1));
-                    i++;
-                    if (i >= message.content.length) {
-                        clearInterval(interval);
-                        // Optional: mark as done typing if needed
-                    }
-                }, 15);
-                return () => clearInterval(interval);
-            }
-        }, [message.content, message.role, message.isTyping]);
-
-        return (
-            <div className={`prose prose-sm max-w-none ${message.role === 'user' ? 'text-primary-foreground' : 'text-foreground'} break-words`}>
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {displayedContent}
-                </ReactMarkdown>
-            </div>
-        );
     };
 
     return (
