@@ -86,7 +86,7 @@ export default function AIChat() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    messages: messages.map(m => ({ role: m.role, content: m.content })), // Send history without UI flags
+                    messages: [...messages, userMessage].map(m => ({ role: m.role, content: m.content })), // Send history WITH current message
                     context
                 })
             });
@@ -94,6 +94,17 @@ export default function AIChat() {
             if (!response.ok) throw new Error('Failed to fetch');
 
             const data = await response.json();
+
+            // If the AI explicitly says it couldn't generate a response, don't save it to history as a valid AI thought
+            if (data.content === "I couldn't generate a response.") {
+                setMessages(prev => [...prev, {
+                    role: 'assistant',
+                    content: "I'm sorry, I'm having trouble processing that right now. Could you please rephrase?",
+                    isTyping: false
+                }]);
+                return;
+            }
+
             const assistantMessage: Message = {
                 role: 'assistant',
                 content: data.content,
@@ -103,8 +114,8 @@ export default function AIChat() {
             setMessages(prev => [...prev, assistantMessage]);
 
         } catch (error) {
-            console.error(error);
-            setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I'm having trouble connecting right now." }]);
+            console.error('Chat Error:', error);
+            setMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I'm having trouble connecting to the Jand Assistant. Please try again in a moment." }]);
         } finally {
             setIsLoading(false);
         }
